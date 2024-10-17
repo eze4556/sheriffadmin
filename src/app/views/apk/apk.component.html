@@ -1,0 +1,135 @@
+<!-- src/app/components/apk/apk.component.html -->
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="text-align: center;">Subir Cinturón con Hebilla</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding content-background">
+  <ion-card class="belt-card">
+    <ion-card-header>
+      <ion-card-title color="primary" style="text-align: center;">Subir Nuevo Cinturón con Hebilla</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      <!-- Color del Cinturón -->
+      <ion-item>
+        <ion-label position="floating">Color del Cinturón</ion-label>
+        <ion-input [(ngModel)]="buckleBelt.buckleColor" placeholder="Ingrese el color"></ion-input>
+      </ion-item>
+
+      <!-- Talla -->
+      <ion-item>
+        <ion-label position="floating">Talla</ion-label>
+        <ion-input [(ngModel)]="buckleBelt.size" placeholder="Ingrese la talla"></ion-input>
+      </ion-item>
+
+      <!-- Diseño de la tela -->
+      <ion-item>
+        <ion-label position="floating">Tipo de Cuero</ion-label>
+        <ion-input [(ngModel)]="buckleBelt.fabricDesign" placeholder="Ingrese el tipo de cuero"></ion-input>
+      </ion-item>
+
+      <!-- Ancho del cinturón -->
+      <ion-item>
+        <ion-label position="floating">Ancho del cinturón (cm)</ion-label>
+        <ion-input type="number" [(ngModel)]="buckleBelt.width" placeholder="Ingrese el ancho"></ion-input>
+      </ion-item>
+
+      <!-- Grosor de la hebilla -->
+      <ion-item>
+        <ion-label position="floating">Grosor del cinturon (cm)</ion-label>
+        <ion-input type="number" [(ngModel)]="buckleBelt.targetAgeGroup" placeholder="Ingrese el grosor del cinturon"></ion-input>
+      </ion-item>
+
+      <!-- Color de la Hebilla -->
+      <!-- <ion-item>
+        <ion-label position="floating">Color de la Hebilla</ion-label>
+        <ion-input [(ngModel)]="buckleBelt.buckleColor" placeholder="Ingrese el color de la hebilla"></ion-input>
+      </ion-item> -->
+
+      <!-- Marca de la Hebilla (Opcional) -->
+      <ion-item>
+        <ion-label position="floating">Marca de la Hebilla (Opcional)</ion-label>
+        <ion-input [(ngModel)]="buckleBelt.brand" placeholder="Ingrese la marca"></ion-input>
+      </ion-item>
+
+      <!-- Estilo de la Hebilla -->
+      <ion-item>
+        <ion-label position="floating">Estilo de la Hebilla</ion-label>
+        <ion-input [(ngModel)]="buckleBelt.style" placeholder="Ingrese el estilo"></ion-input>
+      </ion-item>
+
+      <!-- Modelo de la Hebilla (Opcional) -->
+      <ion-item>
+        <ion-label position="floating">Modelo de la Hebilla (Opcional)</ion-label>
+        <ion-input [(ngModel)]="buckleBelt.model" placeholder="Ingrese el modelo"></ion-input>
+      </ion-item>
+
+
+      <!-- Selección de Moneda -->
+<ion-item>
+  <ion-label>Moneda del Precio</ion-label>
+  <ion-select [(ngModel)]="buckleBelt.currency" name="currency" placeholder="Seleccione una moneda">
+    <ion-select-option *ngFor="let currency of currencies" [value]="currency.value">
+      {{ currency.label }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+
+
+      <ion-item>
+        <ion-label position="floating">Precio</ion-label>
+        <ion-input [(ngModel)]="buckleBelt.price" placeholder="Ingrese el precio"></ion-input>
+      </ion-item>
+
+      <!-- Subir Imagen -->
+      <ion-item>
+        <ion-label>Subir Imagen (Opcional)</ion-label>
+        <input type="file" (change)="onFileSelected($event, 'imagen')" />
+      </ion-item>
+
+      <!-- Botón para Subir Cinturón con Hebilla -->
+      <ion-button expand="block" color="primary" (click)="subirBelt()">
+        Subir Cinturón con Hebilla
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mostrar Cinturones -->
+  <ion-list *ngIf="belts.length > 0">
+    <ion-item *ngFor="let belt of belts">
+      <ion-label>
+        <h2>Color del Cinturón: {{ belt.buckleColor }}</h2>
+        <p>Talla: {{ belt.size }}</p>
+        <p>Tipo de Cuero: {{ belt.fabricDesign }}</p>
+        <p>Ancho: {{ belt.width }} cm</p>
+        <div *ngIf="belt.buckleColor || belt.brand || belt.style || belt.model || belt.targetAgeGroup">
+          <h3>Detalles de la Hebilla</h3>
+          <p>Color de la Hebilla: {{ belt.buckleColor }}</p>
+          <p>Marca: {{ belt.brand || 'No especificada' }}</p>
+          <p>Estilo: {{ belt.style }}</p>
+          <p>Modelo: {{ belt.model || 'No especificado' }}</p>
+          <p>Grupo de Edad: {{ belt.targetAgeGroup }}</p>
+                   <p>Precio: {{ getCurrencySymbol(belt.currency) }} {{ belt.price }}</p>
+
+          <!-- <p>Precio: $ {{ belt.price }}</p> -->
+        </div>
+        <img *ngIf="belt.imagenUrl" [src]="belt.imagenUrl" alt="{{ belt.buckleColor }}" style="max-width: 100px;"/>
+      </ion-label>
+      <ion-button fill="outline" color="danger" (click)="borrarBelt(belt.id)">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        Borrar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-text *ngIf="belts.length === 0" color="medium" style="text-align: center; display: block;">
+    No hay cinturones subidos.
+  </ion-text>
+</ion-content>

@@ -1,0 +1,96 @@
+<!-- src/app/components/apk/apk.component.html -->
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="text-align: center;">Subir Hebilla</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding content-background">
+  <ion-card class="buckle-card">
+    <ion-card-header>
+      <ion-card-title color="primary" style="text-align: center;">Subir Nueva Hebilla</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      <!-- Información de la Hebilla -->
+      <ion-item>
+        <ion-label position="floating">Modelo de la Hebilla</ion-label>
+        <ion-input [(ngModel)]="buckle.modelo" placeholder="Ingrese el modelo"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Material de la Hebilla</ion-label>
+        <ion-input [(ngModel)]="buckle.material" placeholder="Ingrese el material"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Medida de la Hebilla</ion-label>
+        <ion-input [(ngModel)]="buckle.medida" placeholder="Ingrese la medida (ej. 4x6 cm)"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Peso de la Hebilla (g)</ion-label>
+        <ion-input type="number" [(ngModel)]="buckle.peso" placeholder="Ingrese el peso"></ion-input>
+      </ion-item>
+
+            <!-- Selección de Moneda -->
+<ion-item>
+  <ion-label>Moneda del Precio</ion-label>
+  <ion-select [(ngModel)]="buckle.currency" name="currency" placeholder="Seleccione una moneda">
+    <ion-select-option *ngFor="let currency of currencies" [value]="currency.value">
+      {{ currency.label }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+
+      <ion-item>
+        <ion-label position="floating">Precio</ion-label>
+        <ion-input type="number" [(ngModel)]="buckle.price" placeholder="Ingrese el precio"></ion-input>
+      </ion-item>
+
+
+      <!-- Subir Imagen de la Hebilla -->
+      <ion-item>
+        <ion-label>Subir Imagen de la Hebilla (Opcional)</ion-label>
+        <input type="file" (change)="onFileSelected($event)" />
+      </ion-item>
+
+      <!-- Botón para Subir Hebilla -->
+      <ion-button expand="block" color="primary" (click)="subirBuckle()">
+        Subir Hebilla
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mostrar Hebillas -->
+  <ion-list *ngIf="buckles.length > 0">
+    <ion-item *ngFor="let buckle of buckles">
+      <ion-label>
+        <h2>Modelo: {{ buckle.modelo }}</h2>
+        <p>Material: {{ buckle.material }}</p>
+        <p>Medida: {{ buckle.medida }}</p>
+        <p>Peso: {{ buckle.peso }} g</p>
+        <!-- <p>Precio:  ${{ buckle.price }} </p> -->
+                 <p>Precio: {{ getCurrencySymbol(buckle.currency) }}{{ buckle.price }}</p>
+
+        <div *ngIf="buckle.imagenUrl">
+          <h3>Imagen</h3>
+          <img [src]="buckle.imagenUrl" alt="{{ buckle.modelo }}" style="max-width: 100px;"/>
+        </div>
+      </ion-label>
+      <ion-button fill="outline" color="danger" (click)="borrarBuckle(buckle.id)">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        Borrar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-text *ngIf="buckles.length === 0" color="medium" style="text-align: center; display: block;">
+    No hay hebillas subidas.
+  </ion-text>
+</ion-content>

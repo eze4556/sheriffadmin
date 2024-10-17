@@ -1,0 +1,106 @@
+<!-- src/app/components/leather-strap/leather-strap.component.html -->
+
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="text-align: center;">Subir Cinto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding content-background">
+  <ion-card class="leather-strap-card">
+    <ion-card-header>
+      <ion-card-title color="primary" style="text-align: center;">Subir Nuevo Cinto</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      <!-- Información del Cinto -->
+      <ion-item>
+        <ion-label position="floating">Tipo de Cinto</ion-label>
+        <ion-input [(ngModel)]="leatherStrap.cintos" placeholder="Ingrese el tipo de cinto"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Ancho del Cinto (cm)</ion-label>
+        <ion-input type="number" [(ngModel)]="leatherStrap.ancho" placeholder="Ingrese el ancho"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Espesor del Cinto (mm)</ion-label>
+        <ion-input type="number" [(ngModel)]="leatherStrap.espesor" placeholder="Ingrese el espesor"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Largo Del Cinto</ion-label>
+        <ion-input type="number" [(ngModel)]="leatherStrap.largo" placeholder="Ingrese el largo"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Color del Cinto</ion-label>
+        <ion-input [(ngModel)]="leatherStrap.color" placeholder="Ingrese el color"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Material del Cinto</ion-label>
+        <ion-input [(ngModel)]="leatherStrap.material" placeholder="Ingrese el material"></ion-input>
+      </ion-item>
+
+      <!-- Selección de Moneda -->
+<ion-item>
+  <ion-label>Moneda del Precio</ion-label>
+  <ion-select [(ngModel)]="leatherStrap.currency" name="currency" placeholder="Seleccione una moneda">
+    <ion-select-option *ngFor="let currency of currencies" [value]="currency.value">
+      {{ currency.label }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
+
+
+      <ion-item>
+        <ion-label position="floating">Precio del Cinto</ion-label>
+        <ion-input type="number" [(ngModel)]="leatherStrap.price" name="price" placeholder="Ingrese el precio"></ion-input>
+      </ion-item>
+
+      <!-- Subir Imagen del Cinto -->
+      <ion-item>
+        <ion-label>Subir Imagen del Cinto (Opcional)</ion-label>
+        <input type="file" (change)="onFileSelected($event)" />
+      </ion-item>
+
+      <!-- Botón para Subir Cinto -->
+      <ion-button expand="block" color="primary" (click)="subirLeatherStrap()">
+        Subir Cinto
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Mostrar Cintos -->
+  <ion-list *ngIf="leatherStraps.length > 0">
+    <ion-item *ngFor="let strap of leatherStraps">
+      <ion-label>
+        <h2>Tipo: {{ strap.cintos }}</h2>
+        <p>Ancho: {{ strap.ancho }} cm</p>
+        <p>Espesor: {{ strap.espesor }} mm</p>
+        <p>Color: {{ strap.color }}</p>
+        <p>Material: {{ strap.material }}</p>
+        <!-- <p>Precio: ${{ strap.price }}</p> -->
+         <p>Precio: {{ getCurrencySymbol(strap.currency) }}{{ strap.price }}</p>
+
+        <div *ngIf="strap.imagenUrl">
+          <h3>Imagen</h3>
+          <img [src]="strap.imagenUrl" alt="{{ strap.cintos }}" style="max-width: 100px;"/>
+        </div>
+      </ion-label>
+      <ion-button fill="outline" color="danger" (click)="borrarLeatherStrap(strap.id)">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        Borrar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-text *ngIf="leatherStraps.length === 0" color="medium" style="text-align: center; display: block;">
+    No hay cintos subidos.
+  </ion-text>
+</ion-content>

@@ -1,0 +1,58 @@
+ion-content {
+  --background: #f8f8f8;
+  padding: 16px;
+}
+
+.apk-item {
+  background-size: contain;
+  // background-position: center;
+  border-radius: 8px;
+  margin-bottom: 25px;
+  height: 250px; /* Tamaño ajustado para TV */
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.apk-item:hover {
+  transform: scale(1.05); /* Efecto de acercamiento */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Sombra para mayor contraste */
+}
+
+.apk-details {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centra el contenido */
+  text-align: center;
+  color: white;
+  z-index: 10;
+}
+
+.apk-details h2 {
+  font-size: 28px; /* Ajustado para TV */
+  margin: 0;
+  padding-bottom: 8px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); /* Sombra para mejorar la legibilidad sobre la imagen */
+}
+
+.apk-details p {
+  font-size: 18px;
+  margin: 0;
+  padding-bottom: 16px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); /* Sombra para mejorar la legibilidad */
+}
+
+.apk-button {
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  padding: 16px 24px; /* Botón grande */
+  font-size: 22px; /* Tamaño ajustado para TV */
+  transition: background-color 0.3s ease;
+  border-radius: 6px;
+}
+
+.apk-button:hover, .apk-button:focus {
+  background-color: #0056b3;
+}
